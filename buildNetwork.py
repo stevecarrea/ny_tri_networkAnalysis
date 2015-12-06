@@ -61,7 +61,15 @@ visualize(G)
 # Degrees
 degrees= nx.degree(G)
 degrees_df = pd.DataFrame(degrees.items(), columns=['Facility', 'Degrees'])
-#print degrees_df
+values = sorted(set(degrees.values())) 
+hist = [degrees.values().count(x) for x in values]
+plt.figure()
+plt.plot(values, hist,'ro-') # degree
+plt.xlabel('Degree')
+plt.ylabel('Number of nodes')
+plt.title('Degree Distribution')
+plt.savefig('output/degree_distribution.png')
+
 
 # Clustering coefficient of all nodes into a dictionary
 clust_coefficients = nx.clustering(G)
