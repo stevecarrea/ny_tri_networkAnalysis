@@ -20,22 +20,6 @@ def visualize(G):
 	nx.draw(G, pos=nodePos, node_color='blue', node_size=15, style='dotted', edge_color='orange')
 	plt.savefig('output/network.png', bbox_inches='tight')
 
-def topdict(d,tn):
-	'''
-	Returns top tn centrality scores, given the dictionary d
-	'''
-	ind=sorted(d, key=d.get, reverse=True)
-	for i in range(0,tn):
-		print('{0}|{1}:{2}'.format(i+1,ind[i],d[ind[i]]))
-
-def bottomdict(d,tn):
-	'''
-	Returns bottom tn centrality scores, given the dictionary d
-	'''
-	ind=sorted(d, key=d.get, reverse=False)
-	for i in range(0,tn):
-		print('{0}|{1}:{2},{3}'.format(i+1,ind[i],d[ind[i]],fac[ind[i]]))
-
 # Read data
 ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
 ny_tri_trim = ny_tri[['tri_facility_id','facility_name','county','n_5_2_stack_air', 'chemical', 'latitude', 'longitude']]
@@ -76,8 +60,6 @@ visualize(G)
 
 # Degrees
 degrees= nx.degree(G)
-#topdict(degrees,10)
-#bottomdict(degrees,20)
 degrees_df = pd.DataFrame(degrees.items(), columns=['Facility', 'Degrees'])
 #print degrees_df
 
