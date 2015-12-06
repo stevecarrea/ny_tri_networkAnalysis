@@ -4,8 +4,10 @@ import numpy as np
 import pandas as pd
 import networkx as nx  
 import matplotlib.pyplot as plt 
+import warnings
 from collections import defaultdict
 pd.set_option('display.width', 200)
+warnings.simplefilter(action = "ignore", category = (FutureWarning, UserWarning))
 
 def visualize(G):
 	'''
@@ -76,3 +78,8 @@ c1= nx.degree(G)
 
 # Output bottom tn centrality scores, given the dictionary d
 #bottomdict(c1,20)
+
+# Output clustering coefficient of all nodes into a dictionary
+clust_coefficients = nx.clustering(G)
+clust_coefficients_df = pd.DataFrame(clust_coefficients.items(), columns=['Facility', 'Clustering Coefficient'])
+print clust_coefficients_df.describe()
