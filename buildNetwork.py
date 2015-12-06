@@ -69,17 +69,24 @@ for i in fac:
 
 G = nx.Graph()
 
-# Build network and visualize
+# BUILD network and visualize
 visualize(G)
 
-c1= nx.degree(G)
-# Output top tn centrality scores, given the dictionary d
-#topdict(c1,10)
+# DESCRIBE network and visualize
 
-# Output bottom tn centrality scores, given the dictionary d
-#bottomdict(c1,20)
+# Degrees
+degrees= nx.degree(G)
+#topdict(degrees,10)
+#bottomdict(degrees,20)
+degrees_df = pd.DataFrame(degrees.items(), columns=['Facility', 'Degrees'])
+#print degrees_df
 
-# Output clustering coefficient of all nodes into a dictionary
+# Clustering coefficient of all nodes into a dictionary
 clust_coefficients = nx.clustering(G)
 clust_coefficients_df = pd.DataFrame(clust_coefficients.items(), columns=['Facility', 'Clustering Coefficient'])
-print clust_coefficients_df.describe()
+clust_coefficients_df = clust_coefficients_df.sort('Clustering Coefficient', ascending=False)
+#print clust_coefficients_df
+
+# Merge everything
+describeNetwork = pd.merge(degrees_df, clust_coefficients_df, on='Facility')
+print describeNetwork
