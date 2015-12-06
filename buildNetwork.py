@@ -7,6 +7,17 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 pd.set_option('display.width', 200)
 
+def visualize(G):
+	'''
+	Build and visualize network 
+	'''
+	for e in common:
+		G.add_edge(e[0],e[1],weight=len(common[e]))
+
+	plt.figure()
+	nx.draw(G, pos=nodePos, node_color='blue', node_size=15, style='dotted', edge_color='orange')
+	plt.savefig('output/network.png', bbox_inches='tight')
+
 def topdict(d,tn):
 	'''
 	Returns top tn centrality scores, given the dictionary d
@@ -23,19 +34,19 @@ def bottomdict(d,tn):
 	for i in range(0,tn):
 		print('{0}|{1}:{2},{3}'.format(i+1,ind[i],d[ind[i]],fac[ind[i]]))
 
+# Read data
 ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
 ny_tri_trim = ny_tri[['tri_facility_id','facility_name','county','n_5_2_stack_air', 'chemical', 'latitude', 'longitude']]
-ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='NATIONAL GRID WADING RIVER IC FACILITY']
-
+ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='NATIONAL GRID WADING RIVER IC FACILITY']  # Null value for location
+ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='EMAGIN CORP']  # Null value for location
 ny_group = ny_tri_trim.groupby(['facility_name', 'chemical'], as_index=False).aggregate(np.sum)
-#print ny_group.head()
 
+# Create chemical table, single record per facility.
 chemicals_pivot = ny_group.pivot(index='facility_name', columns='chemical', values='n_5_2_stack_air')
-#print chemicals_pivot.head()
 
+# Create location dictionary
 latLon = ny_tri_trim[['facility_name', 'longitude', 'latitude']].set_index('facility_name').drop_duplicates()
-# for i in latLon.index:
-#     print i, latLon.longitude[i],latLon.latitude[i]
+nodePos = latLon.T.to_dict('list')
 
 # Dictionary of {facility: [chemicals]} resulting in 377 facilities
 fac = defaultdict(list)
@@ -54,19 +65,14 @@ for i in fac:
                     if x == y:
                     	common[(i,j)].append(x)
 
-# Build network
 G = nx.Graph()
-for e in common:
-    G.add_edge(e[0],e[1],weight=len(common[e]))
 
-# Visualize network
-plt.figure()
-nx.draw(G, node_color='blue', node_size=15, style='dotted', edge_color='orange')
-plt.savefig('output/network.png', bbox_inches='tight')
+# Build network and visualize
+visualize(G)
 
-# Output top tn centrality scores, given the dictionary d
 c1= nx.degree(G)
-topdict(c1,10)
+# Output top tn centrality scores, given the dictionary d
+#topdict(c1,10)
 
 # Output bottom tn centrality scores, given the dictionary d
-bottomdict(c1,20)
+#bottomdict(c1,20)
