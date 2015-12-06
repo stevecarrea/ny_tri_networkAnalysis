@@ -5,6 +5,7 @@ import pandas as pd
 import networkx as nx  
 import matplotlib.pyplot as plt 
 import warnings
+import seaborn as sns 
 from collections import defaultdict
 pd.set_option('display.width', 200)
 warnings.simplefilter(action = "ignore", category = (FutureWarning, UserWarning))
@@ -70,13 +71,31 @@ plt.ylabel('Number of nodes')
 plt.title('Degree Distribution')
 plt.savefig('output/degree_distribution.png')
 
-
-# Clustering coefficient of all nodes into a dictionary
+# Clustering coefficients
 clust_coefficients = nx.clustering(G)
 clust_coefficients_df = pd.DataFrame(clust_coefficients.items(), columns=['Facility', 'Clustering Coefficient'])
 clust_coefficients_df = clust_coefficients_df.sort('Clustering Coefficient', ascending=False)
 #print clust_coefficients_df
 
+# Node centrality measures
+FCG=list(nx.connected_component_subgraphs(G, copy=True))[0]
+# Betweenness centrality
+betweeness = nx.current_flow_betweenness_centrality(FCG)
+betweeness_df = pd.DataFrame(betweeness.items(), columns=['Facility', 'Betweeness'])
+betweeness_df = betweeness_df.sort('Betweeness', ascending=False)
+# Closeness centrality
+closeness = nx.closeness_centrality(FCG)
+closeness_df = pd.DataFrame(closeness.items(), columns=['Facility', 'Closeness'])
+closeness_df = closeness_df.sort('Closeness', ascending=False)
+# Eigenvector centrality
+eigenvector = nx.eigenvector_centrality(FCG)
+eigenvector_df = pd.DataFrame(eigenvector.items(), columns=['Facility', 'Eigenvector'])
+eigenvector_df = eigenvector_df.sort('Eigenvector', ascending=False)
+
 # Merge everything
-describeNetwork = pd.merge(degrees_df, clust_coefficients_df, on='Facility')
+#describeNetwork = pd.merge(degrees_df, clust_coefficients_df, on='Facility')
+describeNetwork = degrees_df.merge(clust_coefficients_df,on='Facility').merge(betweeness_df,on='Facility').merge(closeness_df, on='Facility').merge(eigenvector_df, on='Facility')
 print describeNetwork
+
+
+
