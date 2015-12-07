@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from itertools import izip
 import csv, json
 import numpy as np 
@@ -15,6 +16,37 @@ def build(G):
 	'''
 	Build and visualize network 
 	'''
+	
+	# Read data
+	ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
+	ny_tri_trim = ny_tri[['tri_facility_id','facility_name','county','n_5_2_stack_air', 'chemical', 'latitude', 'longitude']]
+	ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='NATIONAL GRID WADING RIVER IC FACILITY']  # Null value for location
+	ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='EMAGIN CORP']  # Null value for location
+	ny_group = ny_tri_trim.groupby(['facility_name', 'chemical'], as_index=False).aggregate(np.sum)
+
+	# Create chemical table, single record per facility.
+	chemicals_pivot = ny_group.pivot(index='facility_name', columns='chemical', values='n_5_2_stack_air')
+
+	# Create location dictionary
+	latLon = ny_tri_trim[['facility_name', 'longitude', 'latitude']].set_index('facility_name').drop_duplicates()
+	nodePos = latLon.T.to_dict('list')
+
+	# Dictionary of {facility: [chemicals]} resulting in 377 facilities and chemicals reported 
+	fac = defaultdict(list)
+	for i in chemicals_pivot.index:
+	    for j in chemicals_pivot:
+	        if chemicals_pivot[j][i] > 0:
+	            fac[i].append(j)
+
+	# Dictionary of {(facility1, facility2): [chemicals in common]} resulting in 11283 pairs of facilities
+	common = defaultdict(list)
+	for i in fac:
+	    for j in fac:
+	        if i < j:
+	            for x in fac[i]:
+	                for y in fac[j]:
+	                    if x == y:
+	                    	common[(i,j)].append(x)
 	for e in common:
 		G.add_edge(e[0],e[1],weight=len(common[e]))
 
@@ -75,42 +107,27 @@ def describe(G):
 
 	# Merge everything
 	describeNetwork = degrees_df.merge(clust_coefficients_df,on='Facility').merge(betweeness_df,on='Facility').merge(closeness_df, on='Facility').merge(eigenvector_df, on='Facility')
-	print describeNetwork.sort('Degrees', ascending=False)
+	describeNetwork = describeNetwork.sort('Degrees', ascending=False)
+	describeNetwork.to_csv('output/describeNetwork.csv')
+
+def community_detection(G):
+	'''
+	Perform community detection by maximizing intra-community edges while minimizing inter-community edges​
+	The value of the modularity lies in the range (-0.5, 1)
+	It is positive if the number of edges within groups exceeds the number expected on the basis of chance.
+	'''
+
+	part = community.best_partition(G)
+	mod = community.modularity(part,G)
+	print("modularity:", mod)
+	# Plot, color nodes using community structure
+	values = [part.get(node) for node in G.nodes()]
+	plt.figure()
+	nx.draw_spring(G, cmap = plt.get_cmap('jet'), node_color = values, node_size=30, with_labels=False)
+	plt.savefig('output/network_communities.png', bbox_inches='tight')
+	plt.close()
 
 ########################## Functions Above ########################## 
-
-# Read data
-ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
-ny_tri_trim = ny_tri[['tri_facility_id','facility_name','county','n_5_2_stack_air', 'chemical', 'latitude', 'longitude']]
-ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='NATIONAL GRID WADING RIVER IC FACILITY']  # Null value for location
-ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='EMAGIN CORP']  # Null value for location
-ny_group = ny_tri_trim.groupby(['facility_name', 'chemical'], as_index=False).aggregate(np.sum)
-
-# Create chemical table, single record per facility.
-chemicals_pivot = ny_group.pivot(index='facility_name', columns='chemical', values='n_5_2_stack_air')
-
-# Create location dictionary
-latLon = ny_tri_trim[['facility_name', 'longitude', 'latitude']].set_index('facility_name').drop_duplicates()
-nodePos = latLon.T.to_dict('list')
-
-# Dictionary of {facility: [chemicals]} resulting in 377 facilities and chemicals reported 
-fac = defaultdict(list)
-for i in chemicals_pivot.index:
-    for j in chemicals_pivot:
-        if chemicals_pivot[j][i] > 0:
-            fac[i].append(j)
-
-# Dictionary of {(facility1, facility2): [chemicals in common]} resulting in 11283 pairs of facilities
-common = defaultdict(list)
-for i in fac:
-    for j in fac:
-        if i < j:
-            for x in fac[i]:
-                for y in fac[j]:
-                    if x == y:
-                    	common[(i,j)].append(x)
-
-########################## Generate Graph ########################## 
 
 G = nx.Graph()
 
@@ -118,16 +135,13 @@ G = nx.Graph()
 build(G)
 
 # DESCRIBE network 
-#describe(G)
+print nx.info(G)  # General  
+describe(G) 
 
 # COMMUNITY DETECTION
-# Find modularity
-part = community.best_partition(G)
-mod = community.modularity(part,G)
-# Plot, color nodes using community structure
-values = [part.get(node) for node in G.nodes()]
-plt.figure()
-nx.draw_spring(G, cmap = plt.get_cmap('jet'), node_color = values, node_size=30, with_labels=False)
-plt.savefig('output/network_communities.png', bbox_inches='tight')
-plt.close()
+community_detection(G)
+
+
+
+
 
