@@ -3,6 +3,7 @@ import csv, json
 import numpy as np 
 import pandas as pd
 import networkx as nx  
+import community
 import matplotlib.pyplot as plt 
 import warnings
 import seaborn as sns 
@@ -10,7 +11,7 @@ from collections import defaultdict
 pd.set_option('display.width', 200)
 warnings.simplefilter(action = "ignore", category = (FutureWarning, UserWarning))
 
-def visualize(G):
+def build(G):
 	'''
 	Build and visualize network 
 	'''
@@ -20,6 +21,63 @@ def visualize(G):
 	plt.figure()
 	nx.draw(G, pos=nodePos, node_color='blue', node_size=15, style='dotted', edge_color='orange')
 	plt.savefig('output/network.png', bbox_inches='tight')
+	plt.close()
+
+	plt.figure()
+	nx.draw(G, node_color='blue', node_size=15, style='dotted', edge_color='orange')
+	plt.savefig('output/network_noPosition.png', bbox_inches='tight')
+	plt.close()
+
+def describe(G):
+	'''
+	Describe the network: degrees, clustering, and centrality measures
+	'''	
+	# Degree
+	# The number of connections a node has to other nodes.
+	degrees= nx.degree(G)
+	degrees_df = pd.DataFrame(degrees.items(), columns=['Facility', 'Degrees'])
+	values = sorted(set(degrees.values())) 
+	hist = [degrees.values().count(x) for x in values]
+	plt.figure()
+	plt.plot(values, hist,'ro-') # degree
+	plt.xlabel('Degree')
+	plt.ylabel('Number of nodes')
+	plt.title('Degree Distribution')
+	plt.savefig('output/degree_distribution.png')
+
+	# Clustering coefficients
+	# The bipartie clustering coefficient is a measure of local density of connections.
+	clust_coefficients = nx.clustering(G)
+	clust_coefficients_df = pd.DataFrame(clust_coefficients.items(), columns=['Facility', 'Clustering Coefficient'])
+	clust_coefficients_df = clust_coefficients_df.sort('Clustering Coefficient', ascending=False)
+	#print clust_coefficients_df
+
+	# Node centrality measures
+	FCG=list(nx.connected_component_subgraphs(G, copy=True))[0]
+	# Current flow betweenness centrality
+	# Current-flow betweenness centrality uses an electrical current model for information spreading 
+	# in contrast to betweenness centrality which uses shortest paths.
+	betweeness = nx.current_flow_betweenness_centrality(FCG)
+	betweeness_df = pd.DataFrame(betweeness.items(), columns=['Facility', 'Betweeness'])
+	betweeness_df = betweeness_df.sort('Betweeness', ascending=False)
+	# Closeness centrality
+	# The closeness of a node is the distance to all other nodes in the graph 
+	# or in the case that the graph is not connected to all other nodes in the connected component containing that node.
+	closeness = nx.closeness_centrality(FCG)
+	closeness_df = pd.DataFrame(closeness.items(), columns=['Facility', 'Closeness'])
+	closeness_df = closeness_df.sort('Closeness', ascending=False)
+	# Eigenvector centrality
+	# Eigenvector centrality computes the centrality for a node based on the centrality of its neighbors.
+	# In other words, how connected a node is to other highly connected nodes.
+	eigenvector = nx.eigenvector_centrality(FCG)
+	eigenvector_df = pd.DataFrame(eigenvector.items(), columns=['Facility', 'Eigenvector'])
+	eigenvector_df = eigenvector_df.sort('Eigenvector', ascending=False)
+
+	# Merge everything
+	describeNetwork = degrees_df.merge(clust_coefficients_df,on='Facility').merge(betweeness_df,on='Facility').merge(closeness_df, on='Facility').merge(eigenvector_df, on='Facility')
+	print describeNetwork.sort('Degrees', ascending=False)
+
+########################## Functions Above ########################## 
 
 # Read data
 ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
@@ -35,7 +93,7 @@ chemicals_pivot = ny_group.pivot(index='facility_name', columns='chemical', valu
 latLon = ny_tri_trim[['facility_name', 'longitude', 'latitude']].set_index('facility_name').drop_duplicates()
 nodePos = latLon.T.to_dict('list')
 
-# Dictionary of {facility: [chemicals]} resulting in 377 facilities
+# Dictionary of {facility: [chemicals]} resulting in 377 facilities and chemicals reported 
 fac = defaultdict(list)
 for i in chemicals_pivot.index:
     for j in chemicals_pivot:
@@ -52,50 +110,24 @@ for i in fac:
                     if x == y:
                     	common[(i,j)].append(x)
 
+########################## Generate Graph ########################## 
+
 G = nx.Graph()
 
 # BUILD network and visualize
-visualize(G)
+build(G)
 
-# DESCRIBE network and visualize
+# DESCRIBE network 
+#describe(G)
 
-# Degrees
-degrees= nx.degree(G)
-degrees_df = pd.DataFrame(degrees.items(), columns=['Facility', 'Degrees'])
-values = sorted(set(degrees.values())) 
-hist = [degrees.values().count(x) for x in values]
+# COMMUNITY DETECTION
+# Find modularity
+part = community.best_partition(G)
+mod = community.modularity(part,G)
+# Plot, color nodes using community structure
+values = [part.get(node) for node in G.nodes()]
 plt.figure()
-plt.plot(values, hist,'ro-') # degree
-plt.xlabel('Degree')
-plt.ylabel('Number of nodes')
-plt.title('Degree Distribution')
-plt.savefig('output/degree_distribution.png')
-
-# Clustering coefficients
-clust_coefficients = nx.clustering(G)
-clust_coefficients_df = pd.DataFrame(clust_coefficients.items(), columns=['Facility', 'Clustering Coefficient'])
-clust_coefficients_df = clust_coefficients_df.sort('Clustering Coefficient', ascending=False)
-#print clust_coefficients_df
-
-# Node centrality measures
-FCG=list(nx.connected_component_subgraphs(G, copy=True))[0]
-# Betweenness centrality
-betweeness = nx.current_flow_betweenness_centrality(FCG)
-betweeness_df = pd.DataFrame(betweeness.items(), columns=['Facility', 'Betweeness'])
-betweeness_df = betweeness_df.sort('Betweeness', ascending=False)
-# Closeness centrality
-closeness = nx.closeness_centrality(FCG)
-closeness_df = pd.DataFrame(closeness.items(), columns=['Facility', 'Closeness'])
-closeness_df = closeness_df.sort('Closeness', ascending=False)
-# Eigenvector centrality
-eigenvector = nx.eigenvector_centrality(FCG)
-eigenvector_df = pd.DataFrame(eigenvector.items(), columns=['Facility', 'Eigenvector'])
-eigenvector_df = eigenvector_df.sort('Eigenvector', ascending=False)
-
-# Merge everything
-#describeNetwork = pd.merge(degrees_df, clust_coefficients_df, on='Facility')
-describeNetwork = degrees_df.merge(clust_coefficients_df,on='Facility').merge(betweeness_df,on='Facility').merge(closeness_df, on='Facility').merge(eigenvector_df, on='Facility')
-print describeNetwork
-
-
+nx.draw_spring(G, cmap = plt.get_cmap('jet'), node_color = values, node_size=30, with_labels=False)
+plt.savefig('output/network_communities.png', bbox_inches='tight')
+plt.close()
 
