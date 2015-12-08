@@ -12,13 +12,13 @@ from collections import defaultdict
 pd.set_option('display.width', 200)
 warnings.simplefilter(action = "ignore", category = (FutureWarning, UserWarning))
 
-def build(G):
+def build(G, ny_tri):
 	'''
 	Build and visualize network 
 	'''
 	
-	# Read data
-	ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
+
+
 	ny_tri_trim = ny_tri[['tri_facility_id','facility_name','county','n_5_2_stack_air', 'chemical', 'latitude', 'longitude']]
 	ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='NATIONAL GRID WADING RIVER IC FACILITY']  # Null value for location
 	ny_tri_trim = ny_tri_trim[ny_tri_trim['facility_name']!='EMAGIN CORP']  # Null value for location
@@ -52,15 +52,17 @@ def build(G):
 
 	plt.figure()
 	nx.draw(G, pos=nodePos, node_color='blue', node_size=15, style='dotted', edge_color='orange')
-	plt.savefig('output/network.png', bbox_inches='tight')
+	plt.savefig('output/network.pdf', bbox_inches='tight')
 	plt.close()
 
 	plt.figure()
 	nx.draw(G, node_color='blue', node_size=15, style='dotted', edge_color='orange')
-	plt.savefig('output/network_noPosition.png', bbox_inches='tight')
+	plt.savefig('output/network_noPosition.pdf', bbox_inches='tight')
 	plt.close()
 
-def describe(G):
+describeNetwork = pd.DataFrame()
+def describe(G, ny_tri):
+	global describeNetwork
 	'''
 	Describe the network: degrees, clustering, and centrality measures
 	'''	
@@ -105,8 +107,17 @@ def describe(G):
 	eigenvector_df = pd.DataFrame(eigenvector.items(), columns=['Facility', 'Eigenvector'])
 	eigenvector_df = eigenvector_df.sort('Eigenvector', ascending=False)
 
+	# Create dataframe of facility info
+	fac_info = ny_tri[['facility_name', 'primary_naics', 'parent_company_name']].drop_duplicates()
+	fac_info.rename(columns={'facility_name':'Facility'}, inplace=True)
+
 	# Merge everything
-	describeNetwork = degrees_df.merge(clust_coefficients_df,on='Facility').merge(betweeness_df,on='Facility').merge(closeness_df, on='Facility').merge(eigenvector_df, on='Facility')
+	describeNetwork = degrees_df.merge(
+		clust_coefficients_df,on='Facility').merge(
+		betweeness_df,on='Facility').merge(
+		closeness_df, on='Facility').merge(
+		eigenvector_df, on='Facility').merge(
+		fac_info, on='Facility', how='left')
 	describeNetwork = describeNetwork.sort('Degrees', ascending=False)
 	describeNetwork.to_csv('output/describeNetwork.csv')
 
@@ -117,26 +128,35 @@ def community_detection(G):
 	It is positive if the number of edges within groups exceeds the number expected on the basis of chance.
 	'''
 
+	# Compute the partition of the graph nodes which maximises the modularity
 	part = community.best_partition(G)
 	mod = community.modularity(part,G)
 	print("modularity:", mod)
+	communities_df = pd.DataFrame(part.items(), columns=['Facility', 'Community'])  
+	final_df = describeNetwork.merge(communities_df, on='Facility')
+	final_df.to_csv('output/describeNetwork.csv')
+
 	# Plot, color nodes using community structure
 	values = [part.get(node) for node in G.nodes()]
 	plt.figure()
 	nx.draw_spring(G, cmap = plt.get_cmap('jet'), node_color = values, node_size=30, with_labels=False)
-	plt.savefig('output/network_communities.png', bbox_inches='tight')
+	plt.savefig('output/network_communities.svg', bbox_inches='tight')
 	plt.close()
 
 ########################## Functions Above ########################## 
 
+# Read data
+ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')	
+
+
 G = nx.Graph()
 
 # BUILD network and visualize
-build(G)
+build(G, ny_tri)
 
 # DESCRIBE network 
 print nx.info(G)  # General  
-describe(G) 
+describe(G, ny_tri) 
 
 # COMMUNITY DETECTION
 community_detection(G)
