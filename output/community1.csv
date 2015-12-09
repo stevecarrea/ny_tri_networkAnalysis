@@ -1,0 +1,19 @@
+,naics3,indName,count,percent
+0,424,"Merchant Wholesalers, Nondurable Goods ",28,35.0
+1,325,Chemical Manufacturing,17,21.25
+2,326,Plastics and Rubber Products Manufacturing,6,7.5
+3,493,Warehousing and Storage,4,5.0
+4,221,Utilities ,4,5.0
+5,339,Miscellaneous Manufacturing,3,3.75
+6,334,Computer and Electronic Product Manufacturing,2,2.5
+7,332,Fabricated Metal Product Manufacturing,2,2.5
+8,322,Paper Manufacturing,2,2.5
+9,313,Textile Mills,2,2.5
+10,311,Food Manufacturing,2,2.5
+11,327,Nonmetallic Mineral Product Manufacturing,2,2.5
+12,333,Machinery Manufacturing,1,1.25
+13,331,Primary Metal Manufacturing,1,1.25
+14,335,"Electrical Equipment, Appliance, and Component Manufacturing",1,1.25
+15,337,Furniture and Related Product Manufacturing,1,1.25
+16,324,Petroleum and Coal Products Manufacturing,1,1.25
+17,321,Wood Product Manufacturing,1,1.25
