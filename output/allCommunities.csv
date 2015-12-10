@@ -1,0 +1,72 @@
+,community,naics3,indName,countPerComm,percentPerComm
+0,0,325,Chemical Manufacturing,30,21.1267605634
+1,0,332,Fabricated Metal Product Manufacturing,21,14.7887323944
+2,0,334,Computer and Electronic Product Manufacturing,14,9.85915492958
+3,0,221,Utilities ,13,9.15492957746
+4,0,327,Nonmetallic Mineral Product Manufacturing,13,9.15492957746
+5,0,331,Primary Metal Manufacturing,10,7.04225352113
+6,0,311,Food Manufacturing,7,4.92957746479
+7,0,333,Machinery Manufacturing,4,2.81690140845
+8,0,323,Printing and Related Support Activities,4,2.81690140845
+9,0,562,Waste Management and Remediation Services,4,2.81690140845
+10,0,339,Miscellaneous Manufacturing,4,2.81690140845
+11,0,326,Plastics and Rubber Products Manufacturing,3,2.11267605634
+12,0,322,Paper Manufacturing,3,2.11267605634
+13,0,335,"Electrical Equipment, Appliance, and Component Manufacturing",2,1.40845070423
+14,0,336,Transportation Equipment Manufacturing,2,1.40845070423
+15,0,424,"Merchant Wholesalers, Nondurable Goods ",2,1.40845070423
+16,0,561,Administrative and Support Services,1,0.704225352113
+17,0,337,Furniture and Related Product Manufacturing,1,0.704225352113
+18,0,324,Petroleum and Coal Products Manufacturing,1,0.704225352113
+19,0,312,Beverage and Tobacco Product Manufacturing,1,0.704225352113
+20,0,423,"Merchant Wholesalers, Durable Goods ",1,0.704225352113
+21,0,212,Mining (except Oil and Gas),1,0.704225352113
+22,1,424,"Merchant Wholesalers, Nondurable Goods ",28,35.0
+23,1,325,Chemical Manufacturing,17,21.25
+24,1,326,Plastics and Rubber Products Manufacturing,6,7.5
+25,1,493,Warehousing and Storage,4,5.0
+26,1,221,Utilities ,4,5.0
+27,1,339,Miscellaneous Manufacturing,3,3.75
+28,1,334,Computer and Electronic Product Manufacturing,2,2.5
+29,1,332,Fabricated Metal Product Manufacturing,2,2.5
+30,1,322,Paper Manufacturing,2,2.5
+31,1,313,Textile Mills,2,2.5
+32,1,311,Food Manufacturing,2,2.5
+33,1,327,Nonmetallic Mineral Product Manufacturing,2,2.5
+34,1,333,Machinery Manufacturing,1,1.25
+35,1,331,Primary Metal Manufacturing,1,1.25
+36,1,335,"Electrical Equipment, Appliance, and Component Manufacturing",1,1.25
+37,1,337,Furniture and Related Product Manufacturing,1,1.25
+38,1,324,Petroleum and Coal Products Manufacturing,1,1.25
+39,1,321,Wood Product Manufacturing,1,1.25
+40,2,326,Plastics and Rubber Products Manufacturing,6,75.0
+41,2,336,Transportation Equipment Manufacturing,1,12.5
+42,2,325,Chemical Manufacturing,1,12.5
+43,3,324,Petroleum and Coal Products Manufacturing,13,27.6595744681
+44,3,221,Utilities ,9,19.1489361702
+45,3,424,"Merchant Wholesalers, Nondurable Goods ",8,17.0212765957
+46,3,212,Mining (except Oil and Gas),4,8.51063829787
+47,3,322,Paper Manufacturing,3,6.3829787234
+48,3,493,Warehousing and Storage,2,4.25531914894
+49,3,331,Primary Metal Manufacturing,2,4.25531914894
+50,3,311,Food Manufacturing,2,4.25531914894
+51,3,541,"Professional, Scientific, and Technical Services",1,2.12765957447
+52,3,339,Miscellaneous Manufacturing,1,2.12765957447
+53,3,335,"Electrical Equipment, Appliance, and Component Manufacturing",1,2.12765957447
+54,3,325,Chemical Manufacturing,1,2.12765957447
+55,4,331,Primary Metal Manufacturing,19,20.0
+56,4,332,Fabricated Metal Product Manufacturing,17,17.8947368421
+57,4,334,Computer and Electronic Product Manufacturing,16,16.8421052632
+58,4,327,Nonmetallic Mineral Product Manufacturing,13,13.6842105263
+59,4,336,Transportation Equipment Manufacturing,11,11.5789473684
+60,4,333,Machinery Manufacturing,9,9.47368421053
+61,4,335,"Electrical Equipment, Appliance, and Component Manufacturing",3,3.15789473684
+62,4,928,National Security and International Affairs ,1,1.05263157895
+63,4,424,"Merchant Wholesalers, Nondurable Goods ",1,1.05263157895
+64,4,326,Plastics and Rubber Products Manufacturing,1,1.05263157895
+65,4,325,Chemical Manufacturing,1,1.05263157895
+66,4,322,Paper Manufacturing,1,1.05263157895
+67,4,321,Wood Product Manufacturing,1,1.05263157895
+68,4,311,Food Manufacturing,1,1.05263157895
+69,5,332,Fabricated Metal Product Manufacturing,3,75.0
+70,5,326,Plastics and Rubber Products Manufacturing,1,25.0
