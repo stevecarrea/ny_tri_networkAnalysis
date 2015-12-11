@@ -60,8 +60,10 @@ def build(G, ny_tri):
 	plt.savefig('output/network_noPosition.pdf', bbox_inches='tight')
 	plt.close()
 
+	return(pd.DataFrame(fac.items(), columns=['Facility', 'Chemicals']))
+
 describeNetwork = pd.DataFrame()
-def describe(G, ny_tri):
+def describe(G, ny_tri, chems):
 	global describeNetwork
 	'''
 	Describe the network: degrees, clustering, and centrality measures
@@ -117,7 +119,8 @@ def describe(G, ny_tri):
 		betweeness_df,on='Facility').merge(
 		closeness_df, on='Facility').merge(
 		eigenvector_df, on='Facility').merge(
-		fac_info, on='Facility', how='left')
+		fac_info, on='Facility', how='left').merge(
+		chems, on='Facility', how='left')
 	describeNetwork = describeNetwork.sort('Degrees', ascending=False)
 	describeNetwork.to_csv('output/describeNetwork.csv')
 
@@ -152,11 +155,11 @@ ny_tri = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
 G = nx.Graph()
 
 # BUILD network and visualize
-build(G, ny_tri)
+chems = build(G, ny_tri)
 
 # DESCRIBE network 
 print nx.info(G)  # General  
-describe(G, ny_tri) 
+describe(G, ny_tri, chems) 
 
 # COMMUNITY DETECTION
 community_detection(G)
