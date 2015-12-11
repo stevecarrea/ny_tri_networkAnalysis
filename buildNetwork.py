@@ -108,7 +108,7 @@ def describe(G, ny_tri):
 	eigenvector_df = eigenvector_df.sort('Eigenvector', ascending=False)
 
 	# Create dataframe of facility info
-	fac_info = ny_tri[['facility_name', 'primary_naics', 'parent_company_name']].drop_duplicates()
+	fac_info = ny_tri[['tri_facility_id','facility_name', 'primary_naics', 'parent_company_name']].drop_duplicates()
 	fac_info.rename(columns={'facility_name':'Facility'}, inplace=True)
 
 	# Merge everything

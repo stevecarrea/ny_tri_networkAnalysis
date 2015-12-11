@@ -1,13 +1,16 @@
-,naics3,indName,countPerComm,percentPerComm
-0,324,Petroleum and Coal Products Manufacturing,13,27.6595744681
-1,221,Utilities ,9,19.1489361702
-2,424,"Merchant Wholesalers, Nondurable Goods ",8,17.0212765957
-3,212,Mining (except Oil and Gas),4,8.51063829787
-4,322,Paper Manufacturing,3,6.3829787234
-5,493,Warehousing and Storage,2,4.25531914894
-6,331,Primary Metal Manufacturing,2,4.25531914894
-7,311,Food Manufacturing,2,4.25531914894
-8,541,"Professional, Scientific, and Technical Services",1,2.12765957447
-9,339,Miscellaneous Manufacturing,1,2.12765957447
-10,335,"Electrical Equipment, Appliance, and Component Manufacturing",1,2.12765957447
-11,325,Chemical Manufacturing,1,2.12765957447
+,primary_naics,industry,countPerComm,percentPerComm
+0,324121,Asphalt Paving Mixture and Block Manufacturing ,14,29.1666666667
+1,221112,Fossil Fuel Electric Power Generation ,9,18.75
+2,424710,Petroleum Bulk Stations and Terminals ,8,16.6666666667
+3,212312,Crushed and Broken Limestone Mining and Quarrying ,4,8.33333333333
+4,493190,Other Warehousing and Storage,2,4.16666666667
+5,322121,Paper (except Newsprint) Mills ,2,4.16666666667
+6,541712,"Research and Development in the Physical, Engineering, and Life Sciences (except Biotechnology) ",1,2.08333333333
+7,339999,All Other Miscellaneous Manufacturing ,1,2.08333333333
+8,335991,Carbon and Graphite Product Manufacturing ,1,2.08333333333
+9,331313,Alumina Refining and Primary Aluminum Production ,1,2.08333333333
+10,331110,Iron and Steel Mills and Ferroalloy Manufacturing ,1,2.08333333333
+11,325520,Adhesive Manufacturing,1,2.08333333333
+12,322299,All Other Converted Paper Product Manufacturing ,1,2.08333333333
+13,311513,Cheese Manufacturing ,1,2.08333333333
+14,311511,Fluid Milk Manufacturing ,1,2.08333333333

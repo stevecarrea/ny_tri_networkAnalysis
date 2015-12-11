@@ -1,23 +1,76 @@
-,naics3,indName,countPerComm,percentPerComm
-0,325,Chemical Manufacturing,30,21.1267605634
-1,332,Fabricated Metal Product Manufacturing,21,14.7887323944
-2,334,Computer and Electronic Product Manufacturing,14,9.85915492958
-3,221,Utilities ,13,9.15492957746
-4,327,Nonmetallic Mineral Product Manufacturing,13,9.15492957746
-5,331,Primary Metal Manufacturing,10,7.04225352113
-6,311,Food Manufacturing,7,4.92957746479
-7,333,Machinery Manufacturing,4,2.81690140845
-8,323,Printing and Related Support Activities,4,2.81690140845
-9,562,Waste Management and Remediation Services,4,2.81690140845
-10,339,Miscellaneous Manufacturing,4,2.81690140845
-11,326,Plastics and Rubber Products Manufacturing,3,2.11267605634
-12,322,Paper Manufacturing,3,2.11267605634
-13,335,"Electrical Equipment, Appliance, and Component Manufacturing",2,1.40845070423
-14,336,Transportation Equipment Manufacturing,2,1.40845070423
-15,424,"Merchant Wholesalers, Nondurable Goods ",2,1.40845070423
-16,561,Administrative and Support Services,1,0.704225352113
-17,337,Furniture and Related Product Manufacturing,1,0.704225352113
-18,324,Petroleum and Coal Products Manufacturing,1,0.704225352113
-19,312,Beverage and Tobacco Product Manufacturing,1,0.704225352113
-20,423,"Merchant Wholesalers, Durable Goods ",1,0.704225352113
-21,212,Mining (except Oil and Gas),1,0.704225352113
+,primary_naics,industry,countPerComm,percentPerComm
+0,221112,Fossil Fuel Electric Power Generation ,13,8.72483221477
+1,325180,Other Basic Inorganic Chemical Manufacturing ,10,6.71140939597
+2,332813,"Electroplating, Plating, Polishing, Anodizing, and Coloring ",7,4.69798657718
+3,325199,All Other Basic Organic Chemical Manufacturing ,7,4.69798657718
+4,331492,"Secondary Smelting, Refining, and Alloying of Nonferrous Metal (except Copper and Aluminum) ",5,3.35570469799
+5,334413,Semiconductor and Related Device Manufacturing ,4,2.68456375839
+6,325998,All Other Miscellaneous Chemical Product and Preparation Manufacturing ,4,2.68456375839
+7,562112,Hazardous Waste Collection ,4,2.68456375839
+8,339991,"Gasket, Packing, and Sealing Device Manufacturing ",4,2.68456375839
+9,332431,Metal Can Manufacturing ,4,2.68456375839
+10,327999,All Other Miscellaneous Nonmetallic Mineral Product Manufacturing ,3,2.01342281879
+11,322121,Paper (except Newsprint) Mills ,3,2.01342281879
+12,323111,Commercial Printing (except Screen and Books) ,3,2.01342281879
+13,424690,Other Chemical and Allied Products Merchant Wholesalers ,3,2.01342281879
+14,325510,Paint and Coating Manufacturing,3,2.01342281879
+15,331110,Iron and Steel Mills and Ferroalloy Manufacturing ,2,1.34228187919
+16,327120,Clay Building Material and Refractories Manufacturing ,2,1.34228187919
+17,327310,Cement Manufacturing,2,1.34228187919
+18,332811,Metal Heat Treating ,2,1.34228187919
+19,332812,"Metal Coating, Engraving (except Jewelry and Silverware), and Allied Services to Manufacturers ",2,1.34228187919
+20,332999,All Other Miscellaneous Fabricated Metal Product Manufacturing ,2,1.34228187919
+21,333132,Oil and Gas Field Machinery and Equipment Manufacturing ,2,1.34228187919
+22,327213,Glass Container Manufacturing ,2,1.34228187919
+23,336350,Motor Vehicle Transmission and Power Train Parts Manufacturing,2,1.34228187919
+24,334412,Bare Printed Circuit Board Manufacturing  ,2,1.34228187919
+25,334511,"Search, Detection, Navigation, Guidance, Aeronautical, and Nautical System and Instrument Manufacturing ",2,1.34228187919
+26,311513,Cheese Manufacturing ,2,1.34228187919
+27,327212,Other Pressed and Blown Glass and Glassware Manufacturing ,1,0.671140939597
+28,311111,Dog and Cat Food Manufacturing ,1,0.671140939597
+29,327211,Flat Glass Manufacturing ,1,0.671140939597
+30,311119,Other Animal Food Manufacturing ,1,0.671140939597
+31,326211,Tire Manufacturing (except Retreading) ,1,0.671140939597
+32,311511,Fluid Milk Manufacturing ,1,0.671140939597
+33,326199,All Other Plastics Product Manufacturing ,1,0.671140939597
+34,326113,Unlaminated Plastics Film and Sheet (except Packaging) Manufacturing ,1,0.671140939597
+35,325992,"Photographic Film, Paper, Plate, and Chemical Manufacturing ",1,0.671140939597
+36,311821,Cookie and Cracker Manufacturing ,1,0.671140939597
+37,325130,Synthetic Dye and Pigment Manufacturing,1,0.671140939597
+38,325991,Custom Compounding of Purchased Resins ,1,0.671140939597
+39,311999,All Other Miscellaneous Food Manufacturing ,1,0.671140939597
+40,325611,Soap and Other Detergent Manufacturing ,1,0.671140939597
+41,312120,Breweries,1,0.671140939597
+42,323120,Support Activities for Printing,1,0.671140939597
+43,325414,Biological Product (except Diagnostic) Manufacturing ,1,0.671140939597
+44,324191,Petroleum Lubricating Oil and Grease Manufacturing ,1,0.671140939597
+45,325211,Plastics Material and Resin Manufacturing ,1,0.671140939597
+46,331420,"Copper Rolling, Drawing, Extruding, and Alloying",1,0.671140939597
+47,327420,Gypsum Product Manufacturing,1,0.671140939597
+48,327910,Abrasive Product Manufacturing,1,0.671140939597
+49,423930,Recyclable Material Merchant Wholesalers ,1,0.671140939597
+50,339940,Office Supplies (except Paper) Manufacturing,1,0.671140939597
+51,339114,Dental Equipment and Supplies Manufacturing ,1,0.671140939597
+52,337122,Nonupholstered Wood Household Furniture Manufacturing ,1,0.671140939597
+53,336412,Aircraft Engine and Engine Parts Manufacturing ,1,0.671140939597
+54,335931,Current-Carrying Wiring Device Manufacturing ,1,0.671140939597
+55,335912,Primary Battery Manufacturing ,1,0.671140939597
+56,334419,Other Electronic Component Manufacturing ,1,0.671140939597
+57,334418,Printed Circuit Assembly (Electronic Assembly) Manufacturing ,1,0.671140939597
+58,334417,Electronic Connector Manufacturing ,1,0.671140939597
+59,334416,"Capacitor, Resistor, Coil, Transformer, and Other Inductor Manufacturing ",1,0.671140939597
+60,334220,Radio and Television Broadcasting and Wireless Communications Equipment Manufacturing,1,0.671140939597
+61,334111,Electronic Computer Manufacturing ,1,0.671140939597
+62,333618,Other Engine Equipment Manufacturing ,1,0.671140939597
+63,333613,Mechanical Power Transmission Equipment Manufacturing ,1,0.671140939597
+64,333318,Other Commercial and Service Industry Machinery Manufacturing ,1,0.671140939597
+65,332994,"Small Arms, Ordnance, and Ordnance Accessories Manufacturing ",1,0.671140939597
+66,332919,Other Metal Valve and Pipe Fitting Manufacturing ,1,0.671140939597
+67,332710,Machine Shops,1,0.671140939597
+68,332312,Fabricated Structural Metal Manufacturing ,1,0.671140939597
+69,332119,"Metal Crown, Closure, and Other Metal Stamping (except Automotive) ",1,0.671140939597
+70,331511,Iron Foundries ,1,0.671140939597
+71,561910,Packaging and Labeling Services,1,0.671140939597
+72,331410,Nonferrous Metal (except Aluminum) Smelting and Refining ,1,0.671140939597
+73,327993,Mineral Wool Manufacturing ,1,0.671140939597
+74,212399,All Other Nonmetallic Mineral Mining ,1,0.671140939597
