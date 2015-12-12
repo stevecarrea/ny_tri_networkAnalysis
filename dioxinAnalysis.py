@@ -17,6 +17,7 @@ def chemPickCommunity(comm, chem):
     # Check if a non-reporter has a counterpart that is reporting based on NAICS, community, and chemical
     nonReporters = withoutChemComm[withoutChemComm['primary_naics'].isin(chemNaics)]
     nonReporters['nonReportChem'] = chem
+    nonReporters['num_reporting'] = len(withChemComm)
     nonReporters_df = nonReporters[cols]
     return nonReporters_df
 
@@ -24,7 +25,7 @@ allFacilities = pd.read_csv("output/describeNetwork.csv", dtype={'primary_naics'
 naics = pd.read_csv("data/naics.csv", dtype={'2012 NAICS US Code': object})
 tri2013 = pd.read_csv('data/toxic-release-inventory.ny.2013.geoid.csv')
 
-allChems = pd.unique(tri2013['chemical'].values.ravel())
+allChems = sorted(pd.unique(tri2013['chemical'].values.ravel()))
 print 'Number of chemicals:', len(allChems)
 allComms = sorted(pd.unique(allFacilities['Community'].values.ravel()))
 print 'Communities:', len(allComms)
@@ -35,7 +36,7 @@ naics.columns = ["naics", "industry"]
 allFacilities = allFacilities.merge(naics, left_on=["primary_naics"], right_on="naics", how="left")
 allFacilities = allFacilities.drop(['Unnamed: 0', 'naics', 'Betweeness','Closeness','Eigenvector'], axis=1)
 
-cols = ['nonReportChem', 'Community', 'Facility', 'parent_company_name', 'industry']
+cols = ['nonReportChem', 'Community', 'Facility', 'parent_company_name', 'industry', 'primary_naics', 'num_reporting']
 
 allNonRepList = []
 
