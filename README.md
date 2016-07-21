@@ -22,3 +22,10 @@ A subset of facilities share the same number of degrees at 68 and 70. Many of th
 
 Given a positive modularity, we are sure that the communities detected have not risen by chance. The Louvain Modularity community detection algorithm identifies six distinct communities, and the identified communities have industrial classification profiles that appear to reflect broad recognizable industrial categories. See each community output csv file for the industries found within each community.
 
+Network:
+
+![Network](https://raw.githubusercontent.com/stevecarrea/ny_tri_networkAnalysis/master/output/network_noPosition.png)
+
+Community detection:
+
+![Community Detection](https://raw.githubusercontent.com/stevecarrea/ny_tri_networkAnalysis/master/output/network_communities.png)
